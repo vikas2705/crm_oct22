@@ -1,0 +1,17 @@
+.login-container{
+      background-color: white;
+      padding: 40px 60px 60px 60px;
+}
+
+.form-container{
+    margin: 10px 0;
+}
+
+.btn-primary{
+    width: 100%;
+    background-color: blue;
+    color:white;
+}
+.error-section{
+    color: red
+}
