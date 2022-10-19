@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./login.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { loginUser } from "../../apis/auth";
+import { saveUserInformation } from "../../../../common/utils/helper";
 
 const Login = props => {
     const { setAuthMode } = props;
@@ -12,57 +14,75 @@ const Login = props => {
     const handleUserIdChange = e => {
         setUserId(e.target.value);
     };
-    const handlePasswordhange = e => {
+    const handlePasswordChange = e => {
         setPassword(e.target.value);
     };
 
-    const handleLogin = () => {
+    const handleLogin = e => {
+        e.preventDefault();
         const data = {
             userId,
             password,
         };
 
-        console.log(data);
-
-        navigate("/engineer");
-
         // api call to send this data to server
+        try {
+            loginUser(data)
+                .then(res => {
+                    const { data, status } = res;
+                    if (status === 200) {
+                        const { userTypes } = data;
+                        saveUserInformation(data);
 
-        // if the api response is a success -> we will redirect user to
-        //home / dashboard page
-
-        // if api is failed, we need to show an error to user
-
-        /* if (error) {
-            setErrorMessage(error);
-        } */
+                        // if success, i will redirect the user to correct user page
+                        if (userTypes === "ENGINEER") {
+                            navigate("/engineer");
+                        } else if (userTypes === "CUSTOMER") {
+                            navigate("/customer");
+                        } else {
+                            navigate("/admin");
+                        }
+                    }
+                })
+                .catch(err => {
+                    // if failure, i will show an error
+                    const errMsg = err?.response?.data?.message || err?.message;
+                    setErrorMessage(errMsg);
+                });
+        } catch (err) {
+            // if failure, i will show an error
+            const errMsg = err?.response?.data?.message || err?.message;
+            setErrorMessage(errMsg);
+        }
     };
 
     return (
         <div className='login-container'>
             <h1>Login</h1>
 
-            <div className='form-container'>
-                <input
-                    type='text'
-                    placeholder='enter userId'
-                    value={userId}
-                    onChange={handleUserIdChange}
-                />
-            </div>
-            <div className='form-container'>
-                <input
-                    type='password'
-                    placeholder='enter password'
-                    value={password}
-                    onChange={handlePasswordhange}
-                />
-            </div>
-            <div className='form-container'>
-                <button className='btn-primary' onClick={handleLogin}>
-                    Login
-                </button>
-            </div>
+            <form onSubmit={handleLogin}>
+                <div className='form-container'>
+                    <input
+                        type='text'
+                        placeholder='enter userId'
+                        value={userId}
+                        onChange={handleUserIdChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <input
+                        type='password'
+                        placeholder='enter password'
+                        value={password}
+                        onChange={handlePasswordChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <input type='submit' name='Login' className='btn-primary' />
+                </div>
+            </form>
 
             <div className='form-container'>
                 <span>

@@ -42,20 +42,22 @@ const Register = props => {
         try {
             registerUser(data)
                 .then(resp => {
-                    console.log(resp);
+                    const { status } = resp;
+                    if (status === 201) {
+                        // if success, i will redirect the user to login page
+                        setAuthMode("login");
+                    }
                 })
                 .catch(err => {
+                    // if failure, i will show an error
                     const errMsg = err?.response?.data?.message || err?.message;
                     setErrorMessage(errMsg);
                 });
         } catch (err) {
+            // if failure, i will show an error
             const errMsg = err?.response?.data?.message || err?.message;
             setErrorMessage(errMsg);
         }
-
-        // if success, i will redirect the user to login page
-
-        // if failure, i will show an error
     };
 
     return (
