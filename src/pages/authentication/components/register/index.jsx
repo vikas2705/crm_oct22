@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { registerUser } from "../../apis/auth";
 import "./register.css";
 
 const Register = props => {
     const { setAuthMode } = props;
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
-    const [userName, setUserName] = useState("");
+    const [name, setName] = useState("");
+    const [userType, setUserType] = useState("CUSTOMER");
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -19,20 +21,37 @@ const Register = props => {
         setEmail(e.target.value);
     };
     const handleUserNameChange = e => {
-        setUserName(e.target.value);
+        setName(e.target.value);
+    };
+    const handleUserTypeChange = e => {
+        setUserType(e.target.value);
     };
 
-    const handleRegister = () => {
+    const handleRegister = e => {
+        e.preventDefault();
+
         const data = {
             userId,
             password,
             email,
-            userName,
+            name,
+            userType,
         };
 
-        console.log(data);
-
         // api call to insert a new user
+        try {
+            registerUser(data)
+                .then(resp => {
+                    console.log(resp);
+                })
+                .catch(err => {
+                    const errMsg = err?.response?.data?.message || err?.message;
+                    setErrorMessage(errMsg);
+                });
+        } catch (err) {
+            const errMsg = err?.response?.data?.message || err?.message;
+            setErrorMessage(errMsg);
+        }
 
         // if success, i will redirect the user to login page
 
@@ -43,43 +62,62 @@ const Register = props => {
         <div className='register-container'>
             <h1>Register</h1>
 
-            <div className='form-container'>
-                <input
-                    type='text'
-                    placeholder='enter userId'
-                    value={userId}
-                    onChange={handleUserIdChange}
-                />
-            </div>
-            <div className='form-container'>
-                <input
-                    type='text'
-                    placeholder='enter username'
-                    value={userName}
-                    onChange={handleUserNameChange}
-                />
-            </div>
-            <div className='form-container'>
-                <input
-                    type='email'
-                    placeholder='enter email'
-                    value={email}
-                    onChange={handleEmailChange}
-                />
-            </div>
-            <div className='form-container'>
-                <input
-                    type='password'
-                    placeholder='enter password'
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-            </div>
-            <div className='form-container'>
-                <button className='btn-primary' onClick={handleRegister}>
-                    Register
-                </button>
-            </div>
+            <form onSubmit={handleRegister}>
+                <div className='form-container'>
+                    <input
+                        type='text'
+                        placeholder='enter userId'
+                        value={userId}
+                        onChange={handleUserIdChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <input
+                        type='text'
+                        placeholder='enter username'
+                        value={name}
+                        onChange={handleUserNameChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <input
+                        type='email'
+                        placeholder='enter email'
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <input
+                        type='password'
+                        placeholder='enter password'
+                        value={password}
+                        onChange={handlePasswordChange}
+                        required
+                    />
+                </div>
+                <div className='form-container'>
+                    <label>Select user type: </label>
+                    <select
+                        onChange={handleUserTypeChange}
+                        required
+                        value={userType}
+                    >
+                        <option value='ENGINEER'>Engineer</option>
+                        <option value='CUSTOMER'>Customer</option>
+                    </select>
+                </div>
+                <div className='form-container'>
+                    <input
+                        type='submit'
+                        name='Register'
+                        className='btn-primary'
+                    />
+                </div>
+            </form>
             <div className='form-container'>
                 <span>
                     Already have an account?
