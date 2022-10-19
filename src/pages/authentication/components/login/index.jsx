@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./login.css";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = props => {
     const { setAuthMode } = props;
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleUserIdChange = e => {
         setUserId(e.target.value);
@@ -21,6 +23,8 @@ const Login = props => {
         };
 
         console.log(data);
+
+        navigate("/engineer");
 
         // api call to send this data to server
 
@@ -77,6 +81,13 @@ const Login = props => {
             {errorMessage && (
                 <div className='error-section'>{errorMessage}</div>
             )}
+
+            <div>
+                <NavLink to='/customer'>Go to customer page</NavLink>
+            </div>
+            <div>
+                <NavLink to='/admin'>Go to Admin page</NavLink>
+            </div>
         </div>
     );
 };
