@@ -63,16 +63,17 @@ const Register = props => {
 
     return (
         <div className='register-container'>
-            <h1>Register</h1>
+            <h1 className='m-5'>Register</h1>
 
             <form onSubmit={handleRegister}>
-                <div className='form-container'>
+                <div className='form-container form-group'>
                     <input
                         type='text'
                         placeholder='enter userId'
                         value={userId}
                         onChange={handleUserIdChange}
                         required
+                        className='form-control'
                     />
                 </div>
                 <div className='form-container'>
@@ -82,6 +83,7 @@ const Register = props => {
                         value={name}
                         onChange={handleUserNameChange}
                         required
+                        className='form-control'
                     />
                 </div>
                 <div className='form-container'>
@@ -91,6 +93,7 @@ const Register = props => {
                         value={email}
                         onChange={handleEmailChange}
                         required
+                        className='form-control'
                     />
                 </div>
                 <div className='form-container'>
@@ -100,6 +103,7 @@ const Register = props => {
                         value={password}
                         onChange={handlePasswordChange}
                         required
+                        className='form-control'
                     />
                 </div>
                 <div className='form-container'>
@@ -108,6 +112,7 @@ const Register = props => {
                         onChange={handleUserTypeChange}
                         required
                         value={userType}
+                        className='form-control'
                     >
                         <option value='ENGINEER'>Engineer</option>
                         <option value='CUSTOMER'>Customer</option>
@@ -117,7 +122,7 @@ const Register = props => {
                     <input
                         type='submit'
                         name='Register'
-                        className='btn-primary'
+                        className='btn btn-primary'
                     />
                 </div>
             </form>
@@ -135,9 +140,7 @@ const Register = props => {
                 </span>
             </div>
 
-            {errorMessage && (
-                <div className='error-section'>{errorMessage}</div>
-            )}
+            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
         </div>
     );
 };

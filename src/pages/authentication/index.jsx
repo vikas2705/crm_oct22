@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Login from "./components/login";
 import Register from "./components/register";
-import "./authentication.css";
 import { useNavigate } from "react-router-dom";
 import { USER_TYPES } from "../../common/constants/userTypes";
 
@@ -26,7 +25,7 @@ const Authentication = () => {
     }, [navigate]);
 
     return (
-        <div className='auth'>
+        <div className='d-flex justify-content-center align-items-center vh-100 bg-primary'>
             {authMode === "login" && <Login setAuthMode={setAuthMode} />}
 
             {authMode !== "login" && <Register setAuthMode={setAuthMode} />}

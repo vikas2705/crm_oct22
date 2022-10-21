@@ -59,12 +59,13 @@ const Login = props => {
 
     return (
         <div className='login-container'>
-            <h1>Login</h1>
+            <h1 className='m-5'>Login</h1>
 
             <form onSubmit={handleLogin}>
-                <div className='form-container'>
+                <div className='form-container form-group'>
                     <input
                         type='text'
+                        className='form-control'
                         placeholder='enter userId'
                         value={userId}
                         onChange={handleUserIdChange}
@@ -78,6 +79,7 @@ const Login = props => {
                         value={password}
                         onChange={handlePasswordChange}
                         required
+                        className='form-control'
                     />
                 </div>
                 <div className='form-container'>
@@ -103,9 +105,7 @@ const Login = props => {
                 </span>
             </div>
 
-            {errorMessage && (
-                <div className='error-section'>{errorMessage}</div>
-            )}
+            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
         </div>
     );
 };
