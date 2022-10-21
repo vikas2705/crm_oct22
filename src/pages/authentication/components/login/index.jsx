@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../apis/auth";
 import { saveUserInformation } from "../../../../common/utils/helper";
 import { USER_TYPES } from "../../../../common/constants/userTypes";
+import Loader from "../../../../common/components/Loader";
 
 const Login = props => {
     const { setAuthMode } = props;
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleUserIdChange = e => {
@@ -25,6 +28,7 @@ const Login = props => {
             userId,
             password,
         };
+        setLoading(true);
 
         // api call to send this data to server
         try {
@@ -34,6 +38,7 @@ const Login = props => {
                     if (status === 200) {
                         const { userTypes } = data;
                         saveUserInformation(data);
+                        setLoading(false);
 
                         // if success, i will redirect the user to correct user page
                         if (userTypes === USER_TYPES.ENGINEER) {
@@ -49,63 +54,73 @@ const Login = props => {
                     // if failure, i will show an error
                     const errMsg = err?.response?.data?.message || err?.message;
                     setErrorMessage(errMsg);
+                    setLoading(false);
                 });
         } catch (err) {
             // if failure, i will show an error
             const errMsg = err?.response?.data?.message || err?.message;
             setErrorMessage(errMsg);
+            setLoading(false);
         }
     };
 
     return (
         <div className='login-container'>
-            <h1 className='m-5'>Login</h1>
+            {loading ? (
+                <Loader />
+            ) : (
+                <>
+                    <h1 className='m-5'>Login</h1>
 
-            <form onSubmit={handleLogin}>
-                <div className='form-container form-group'>
-                    <input
-                        type='text'
-                        className='form-control'
-                        placeholder='enter userId'
-                        value={userId}
-                        onChange={handleUserIdChange}
-                        required
-                    />
-                </div>
-                <div className='form-container'>
-                    <input
-                        type='password'
-                        placeholder='enter password'
-                        value={password}
-                        onChange={handlePasswordChange}
-                        required
-                        className='form-control'
-                    />
-                </div>
-                <div className='form-container'>
-                    <input
-                        type='submit'
-                        name='Login'
-                        className='btn btn-primary'
-                    />
-                </div>
-            </form>
+                    <form onSubmit={handleLogin}>
+                        <div className='form-container form-group'>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='enter userId'
+                                value={userId}
+                                onChange={handleUserIdChange}
+                                required
+                            />
+                        </div>
+                        <div className='form-container'>
+                            <input
+                                type='password'
+                                placeholder='enter password'
+                                value={password}
+                                onChange={handlePasswordChange}
+                                required
+                                className='form-control'
+                            />
+                        </div>
+                        <div className='form-container'>
+                            <input
+                                type='submit'
+                                name='Login'
+                                className='btn btn-primary'
+                            />
+                        </div>
+                    </form>
 
-            <div className='form-container'>
-                <span>
-                    Don't have an account?
-                    <a
-                        href='#/'
-                        onClick={() => {
-                            setAuthMode("register");
-                        }}
-                    >
-                        Signup
-                    </a>
-                </span>
-            </div>
+                    <div className='form-container'>
+                        <span>
+                            Don't have an account?
+                            <a
+                                href='#/'
+                                onClick={() => {
+                                    setAuthMode("register");
+                                }}
+                            >
+                                Signup
+                            </a>
+                        </span>
+                    </div>
 
-            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+                    {errorMessage && (
+                        <div className='text-danger'>{errorMessage}</div>
+                    )}
+                </>
+            )}
         </div>
     );
 };
