@@ -3,6 +3,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import "./authentication.css";
 import { useNavigate } from "react-router-dom";
+import { USER_TYPES } from "../../common/constants/userTypes";
 
 const Authentication = () => {
     const [authMode, setAuthMode] = useState("login");
@@ -14,9 +15,9 @@ const Authentication = () => {
         if (accessToken) {
             // if accesstoken exists, find the usertype and send user back to his page
             const userTypes = localStorage.getItem("userTypes");
-            if (userTypes === "ENGINEER") {
+            if (userTypes === USER_TYPES.ENGINEER) {
                 navigate("/engineer");
-            } else if (userTypes === "CUSTOMER") {
+            } else if (userTypes === USER_TYPES.CUSTOMER) {
                 navigate("/customer");
             } else {
                 navigate("/admin");

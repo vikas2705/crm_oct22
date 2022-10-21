@@ -6,3 +6,8 @@ export const saveUserInformation = data => {
     localStorage.setItem("userTypes", userTypes);
     localStorage.setItem("accessToken", accessToken);
 };
+
+export const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+};

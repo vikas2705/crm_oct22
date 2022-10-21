@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./login.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../apis/auth";
 import { saveUserInformation } from "../../../../common/utils/helper";
+import { USER_TYPES } from "../../../../common/constants/userTypes";
 
 const Login = props => {
     const { setAuthMode } = props;
@@ -35,9 +36,9 @@ const Login = props => {
                         saveUserInformation(data);
 
                         // if success, i will redirect the user to correct user page
-                        if (userTypes === "ENGINEER") {
+                        if (userTypes === USER_TYPES.ENGINEER) {
                             navigate("/engineer");
-                        } else if (userTypes === "CUSTOMER") {
+                        } else if (userTypes === USER_TYPES.CUSTOMER) {
                             navigate("/customer");
                         } else {
                             navigate("/admin");
@@ -80,7 +81,11 @@ const Login = props => {
                     />
                 </div>
                 <div className='form-container'>
-                    <input type='submit' name='Login' className='btn-primary' />
+                    <input
+                        type='submit'
+                        name='Login'
+                        className='btn btn-primary'
+                    />
                 </div>
             </form>
 
@@ -101,13 +106,6 @@ const Login = props => {
             {errorMessage && (
                 <div className='error-section'>{errorMessage}</div>
             )}
-
-            <div>
-                <NavLink to='/customer'>Go to customer page</NavLink>
-            </div>
-            <div>
-                <NavLink to='/admin'>Go to Admin page</NavLink>
-            </div>
         </div>
     );
 };

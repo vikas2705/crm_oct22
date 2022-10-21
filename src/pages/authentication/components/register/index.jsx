@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { registerUser } from "../../apis/auth";
 import "./register.css";
+import { USER_TYPES } from "../../../../common/constants/userTypes";
 
 const Register = props => {
     const { setAuthMode } = props;
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [userType, setUserType] = useState("CUSTOMER");
+    const [userType, setUserType] = useState(USER_TYPES.CUSTOMER);
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
