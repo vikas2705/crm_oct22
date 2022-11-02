@@ -1,0 +1,16 @@
+.app-logo{
+    padding: 20px 0;
+    border-bottom: 1px solid white;
+}
+
+.sidebar-links{
+    text-decoration: none;
+    color: white;    
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sidebar-container{
+    border-bottom: 1px solid white;
+    padding: 10px;
+}

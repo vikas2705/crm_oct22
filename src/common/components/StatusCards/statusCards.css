@@ -1,0 +1,21 @@
+.status-cards {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.status-card {
+    height: 150px;
+    border: 1px solid #b39e9e85;
+    width: 22%;
+    padding: 30px;
+
+}
+
+.status-card-header {
+    padding-bottom: 12px;
+}
+
+.status-card-footer {
+    border-top: 1px solid #b39e9e85 !important;
+    padding-top: 12px;
+}
