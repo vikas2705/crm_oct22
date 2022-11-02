@@ -74,7 +74,6 @@ const Admin = () => {
                         </div>
 
                         <StatusCards />
-                        {/**
                         <MaterialTable
                             data={ticketsList}
                             columns={[
@@ -149,7 +148,7 @@ const Admin = () => {
                             onRowClick={() => {
                                 console.log("hello");
                             }}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 {
-  "name": "crm",
+  "name": "crm_frontend_final",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,8 +20,8 @@
     "react-scripts": "5.0.1",
     "react-circular-progressbar": "^2.0.4",
     "web-vitals": "^2.1.4",
-    "@material-table/core": "^4.3.43",
-    "@material-table/exporters": "^1.0.12"
+    "@material-table/core": "4.3.43",
+    "@material-table/exporters": "1.0.12"
   },
   "scripts": {
     "start": "react-scripts start",
