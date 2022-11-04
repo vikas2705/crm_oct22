@@ -14,3 +14,18 @@ export const fetchUsers = async () => {
         }
     );
 };
+
+export const updateUser = async (userData, userId) => {
+    return await axios.put(
+        `${host}/users/${userId}`,
+        userData,
+        {
+            headers: {
+                "x-access-token": localStorage.getItem("accessToken"),
+            },
+        },
+        {
+            userId,
+        }
+    );
+};
