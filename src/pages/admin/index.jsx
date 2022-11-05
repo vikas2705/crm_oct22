@@ -9,6 +9,7 @@ import TicketsTable from "../../common/components/TicketsTable";
 import UsersTable from "./components/usersTable";
 import UserModal from "./components/userModal";
 import TicketModal from "../../common/components/TicketModal";
+import { calculateTicketsCount } from "../../common/utils/tickets";
 
 const Admin = () => {
     const [usersList, setUsersList] = useState([]);
@@ -20,6 +21,13 @@ const Admin = () => {
     const [ticketModalVisible, setTicketModalVisible] = useState(false);
     const [selectedTicketDetails, setSelectedTicketDetails] = useState({});
     const [updateTicketError, setUpdateTicketError] = useState("");
+
+    const [ticketsCount, setTicketsCount] = useState({
+        open: 0,
+        progress: 0,
+        closed: 0,
+        blocked: 0,
+    });
 
     const [showLoader, setShowLoader] = useState(false);
     const userName = localStorage.getItem("name") || "";
@@ -179,6 +187,10 @@ const Admin = () => {
                     if (status === 200) {
                         setTicketsList(data);
                         setShowLoader(false);
+
+                        // calculate TicketsCount
+                        const ticketsCount = calculateTicketsCount(data);
+                        setTicketsCount(ticketsCount);
                     }
                 })
                 .catch(err => {
@@ -214,16 +226,19 @@ const Admin = () => {
                             </h4>
                         </div>
 
-                        <StatusCards />
-                        <TicketsTable
-                            ticketsList={ticketsList}
-                            setTicketModalVisible={setTicketModalVisible}
-                            setSelectedTicketDetails={setSelectedTicketDetails}
+                        <StatusCards
+                            ticketsCount={ticketsCount}
+                            totalTicketsCount={ticketsList.length}
                         />
                         <UsersTable
                             usersList={usersList}
                             setSelectedUserDetails={setSelectedUserDetails}
                             setUserModalVisible={setUserModalVisible}
+                        />
+                        <TicketsTable
+                            ticketsList={ticketsList}
+                            setTicketModalVisible={setTicketModalVisible}
+                            setSelectedTicketDetails={setSelectedTicketDetails}
                         />
                     </div>
                 </div>

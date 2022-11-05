@@ -2,37 +2,35 @@ import React from "react";
 import "./statusCards.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
-const StatusCards = () => {
+const StatusCards = props => {
+    const { ticketsCount, totalTicketsCount } = props;
+
     const statusData = [
         {
             statusName: "Open",
-            count: 8,
+            count: ticketsCount.open,
             color: "info",
-            textColor: "red",
             pathColor: "darkBlue",
             icon: <i className='bi bi-pencil text-primary mx-2'></i>,
         },
         {
             statusName: "Progress",
-            count: 4,
+            count: ticketsCount.progress,
             color: "warning",
-            textColor: "red",
             pathColor: "darkgoldenrod",
             icon: <i className='bi bi-lightning-charge text-warning mx-2'></i>,
         },
         {
             statusName: "Closed",
-            count: 2,
+            count: ticketsCount.closed,
             color: "success",
-            textColor: "red",
             pathColor: "darkolivegreen",
             icon: <i className='bi bi-check2-circle text-success mx-2'></i>,
         },
         {
             statusName: "Blocked",
-            count: 2,
+            count: ticketsCount.blocked,
             color: "secondary",
-            textColor: "red",
             pathColor: "black",
             icon: <i className='bi bi-slash-circle text-secondary mx-2'></i>,
         },
@@ -41,6 +39,9 @@ const StatusCards = () => {
     return (
         <div className='status-cards d-flex justify-content-between'>
             {statusData.map(statusCard => {
+                const percentateValue = Math.floor(
+                    (statusCard.count / totalTicketsCount) * 100
+                );
                 return (
                     <div
                         key={statusCard.statusName}
@@ -51,13 +52,13 @@ const StatusCards = () => {
                             <h4>{statusCard.statusName}</h4>
                         </div>
                         <div className='status-card-footer d-flex justify-content-center'>
-                            <h2>{statusCard.count}</h2>
+                            <h2 className='px-2'>{statusCard.count}</h2>
                             <div style={{ width: 40, height: 40 }}>
                                 <CircularProgressbar
-                                    value={statusCard.count}
+                                    value={percentateValue}
                                     styles={buildStyles({
-                                        textColor: statusCard.textColor,
                                         pathColor: statusCard.pathColor,
+                                        trailColor: "#80808036",
                                     })}
                                 />
                             </div>
