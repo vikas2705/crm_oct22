@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchCreatedTickets } from "../../common/apis/tickets";
+import { fetchCreatedTickets, updateTicket } from "../../common/apis/tickets";
 import { fetchUsers, updateUser } from "./apis/users";
 import Sidebar from "../../common/components/SideBar";
 import StatusCards from "../../common/components/StatusCards";
@@ -19,6 +19,7 @@ const Admin = () => {
     const [ticketsList, setTicketsList] = useState([]);
     const [ticketModalVisible, setTicketModalVisible] = useState(false);
     const [selectedTicketDetails, setSelectedTicketDetails] = useState({});
+    const [updateTicketError, setUpdateTicketError] = useState("");
 
     const [showLoader, setShowLoader] = useState(false);
     const userName = localStorage.getItem("name") || "";
@@ -31,6 +32,8 @@ const Admin = () => {
 
     const hideTicketModal = () => {
         setTicketModalVisible(false);
+        setSelectedTicketDetails({});
+        setUpdateTicketError("");
     };
 
     const handleSelectedUserDataChange = e => {
@@ -48,10 +51,22 @@ const Admin = () => {
         setSelectedUserDetails(currentData);
     };
 
-    useEffect(() => {
-        getUsers();
-        getTickets();
-    }, []);
+    const handleSelectedTicketDataChange = e => {
+        const currentData = { ...selectedTicketDetails };
+        if (e.target.name === "title") {
+            currentData.title = e.target.value;
+        } else if (e.target.name === "description") {
+            currentData.description = e.target.value;
+        } else if (e.target.name === "assignee") {
+            currentData.assignee = e.target.value;
+        } else if (e.target.name === "ticketPriority") {
+            currentData.ticketPriority = e.target.value;
+        } else {
+            currentData.status = e.target.value;
+        }
+
+        setSelectedTicketDetails(currentData);
+    };
 
     const handleUserUpdate = e => {
         e.preventDefault();
@@ -93,6 +108,46 @@ const Admin = () => {
         // show error in the modal
     };
 
+    const handleTicketUpdate = e => {
+        e.preventDefault();
+
+        const data = {
+            title: selectedTicketDetails.title,
+            description: selectedTicketDetails.description,
+            ticketPriority: selectedTicketDetails.ticketPriority,
+            status: selectedTicketDetails.status,
+            assignee: selectedTicketDetails.assignee,
+        };
+
+        try {
+            updateTicket(data, selectedTicketDetails.id)
+                .then(res => {
+                    const { data, status } = res;
+                    if (status === 200) {
+                        hideTicketModal();
+                        getTickets();
+                        // hide the ticket modal
+                        // clear the selected ticket
+                        // refresh the data of tickets to fetrch updated tickets
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    setUpdateTicketError(err.message);
+                    // show error in the modal
+                });
+        } catch (err) {
+            setUpdateTicketError(err.message);
+            console.log(err);
+            // show error in the modal
+        }
+    };
+
+    useEffect(() => {
+        getUsers();
+        getTickets();
+    }, []);
+
     const getUsers = () => {
         setShowLoader(true);
 
@@ -116,19 +171,23 @@ const Admin = () => {
     };
 
     const getTickets = () => {
+        setShowLoader(true);
         try {
             fetchCreatedTickets()
                 .then(result => {
                     const { data, status } = result;
                     if (status === 200) {
                         setTicketsList(data);
+                        setShowLoader(false);
                     }
                 })
                 .catch(err => {
                     console.log(err.message);
+                    setShowLoader(false);
                 });
         } catch (err) {
             console.log(err.message);
+            setShowLoader(false);
         }
     };
 
@@ -181,6 +240,11 @@ const Admin = () => {
                     ticketModalVisible={ticketModalVisible}
                     hideTicketModal={hideTicketModal}
                     selectedTicketDetails={selectedTicketDetails}
+                    handleSelectedTicketDataChange={
+                        handleSelectedTicketDataChange
+                    }
+                    handleTicketUpdate={handleTicketUpdate}
+                    updateTicketError={updateTicketError}
                 />
             </div>
         </div>

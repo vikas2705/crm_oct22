@@ -2,8 +2,14 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
 const TicketModal = props => {
-    const { ticketModalVisible, hideTicketModal, selectedTicketDetails } =
-        props;
+    const {
+        ticketModalVisible,
+        hideTicketModal,
+        selectedTicketDetails,
+        handleSelectedTicketDataChange,
+        handleTicketUpdate,
+        updateTicketError,
+    } = props;
 
     return (
         ticketModalVisible && (
@@ -17,7 +23,7 @@ const TicketModal = props => {
                 <Modal.Header>
                     <Modal.Title>Update Ticket</Modal.Title>
                 </Modal.Header>
-                <form>
+                <form onSubmit={handleTicketUpdate}>
                     <Modal.Body>
                         <p className='m-2'>
                             TicketId: {selectedTicketDetails.id}
@@ -32,6 +38,7 @@ const TicketModal = props => {
                                     name='title'
                                     className='form-control  mx-2'
                                     value={selectedTicketDetails.title}
+                                    onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
                         </div>
@@ -45,6 +52,21 @@ const TicketModal = props => {
                                     name='description'
                                     className='form-control  mx-2'
                                     value={selectedTicketDetails.description}
+                                    onChange={handleSelectedTicketDataChange}
+                                ></input>
+                            </label>
+                        </div>
+
+                        <div className='form-container my-4 mx-2'>
+                            <label htmlFor='description' className='d-flex'>
+                                <span> Ticket priority:</span>
+                                <input
+                                    type='text'
+                                    id='ticketPriority'
+                                    name='ticketPriority'
+                                    className='form-control mx-2'
+                                    value={selectedTicketDetails.ticketPriority}
+                                    onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
                         </div>
@@ -58,18 +80,19 @@ const TicketModal = props => {
                                     name='assignee'
                                     className='form-control  mx-2'
                                     value={selectedTicketDetails.assignee}
-                                    disabled
+                                    onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
                         </div>
 
                         <div className='form-container my-4 mx-2'>
-                            <label htmlFor='ticketStatus' className='d-flex'>
+                            <label htmlFor='status' className='d-flex'>
                                 <span> Ticket Status:</span>
                                 <select
                                     className='form-select mx-2'
-                                    name='ticketStatus'
-                                    value={selectedTicketDetails.ticketStatus}
+                                    name='status'
+                                    value={selectedTicketDetails.status}
+                                    onChange={handleSelectedTicketDataChange}
                                 >
                                     <option value='IN_PROGRESS'>
                                         IN_PROGRESS
@@ -80,6 +103,11 @@ const TicketModal = props => {
                                 </select>
                             </label>
                         </div>
+                        {updateTicketError && (
+                            <div className='my-2 text-danger mx-2'>
+                                {updateTicketError}
+                            </div>
+                        )}
                     </Modal.Body>
 
                     <Modal.Footer>

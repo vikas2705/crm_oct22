@@ -14,3 +14,18 @@ export const fetchCreatedTickets = async () => {
         }
     );
 };
+
+export const updateTicket = async (ticketData, ticketId) => {
+    return await axios.put(
+        `${host}/tickets/${ticketId}`,
+        ticketData,
+        {
+            headers: {
+                "x-access-token": localStorage.getItem("accessToken"),
+            },
+        },
+        {
+            ticketId,
+        }
+    );
+};
