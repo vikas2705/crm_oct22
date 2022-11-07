@@ -12,6 +12,7 @@ import { USER_TYPES } from "./common/constants/userTypes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 function App() {
     return (
@@ -43,14 +44,7 @@ function App() {
                     <Route path='/engineer' element={<Engineer />} />
                 </Route>
                 <Route
-                    element={
-                        <RequireAuth
-                            allowedRoles={[
-                                USER_TYPES.ADMIN,
-                                USER_TYPES.CUSTOMER,
-                            ]}
-                        />
-                    }
+                    element={<RequireAuth allowedRoles={[USER_TYPES.ADMIN]} />}
                 >
                     <Route path='/admin' element={<Admin />} />
                 </Route>

@@ -10,6 +10,7 @@ import UsersTable from "./components/usersTable";
 import UserModal from "./components/userModal";
 import TicketModal from "../../common/components/TicketModal";
 import { calculateTicketsCount } from "../../common/utils/tickets";
+import SidebarNew from "../../common/components/SideBarNew";
 
 const Admin = () => {
     const [usersList, setUsersList] = useState([]);
@@ -210,12 +211,12 @@ const Admin = () => {
     return (
         <div>
             <div className='container-fluid'>
-                <div className='row vh-100'>
-                    <div className='col-2 noPadding'>
-                        <Sidebar />
+                <div className='row vh-100 bg-light'>
+                    <div className='col-1 noPadding'>
+                        <SidebarNew home='/admin' />
                     </div>
 
-                    <div className='col-10 admin-main bg-gray-200 vh-100 overflow-auto'>
+                    <div className='col-11 admin-main bg-gray-200 vh-100 overflow-auto'>
                         <div>
                             <h2 className='text-primary'>
                                 Welcome, {userName}
