@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchCreatedTickets, updateTicket } from "../../common/apis/tickets";
 import { fetchUsers, updateUser } from "./apis/users";
-import Sidebar from "../../common/components/SideBar";
 import StatusCards from "../../common/components/StatusCards";
 import Loader from "../../common/components/Loader";
 import "./admin.css";
@@ -209,60 +208,54 @@ const Admin = () => {
     }
 
     return (
-        <div>
-            <div className='container-fluid'>
-                <div className='row vh-100 bg-light'>
-                    <div className='col-1 noPadding'>
-                        <SidebarNew home='/admin' />
-                    </div>
-
-                    <div className='col-11 admin-main bg-gray-200 vh-100 overflow-auto'>
-                        <div>
-                            <h2 className='text-primary'>
-                                Welcome, {userName}
-                            </h2>
-
-                            <h4 className='text-secondary'>
-                                Take a quick look at your admin stats below
-                            </h4>
-                        </div>
-
-                        <StatusCards
-                            ticketsCount={ticketsCount}
-                            totalTicketsCount={ticketsList.length}
-                        />
-                        <UsersTable
-                            usersList={usersList}
-                            setSelectedUserDetails={setSelectedUserDetails}
-                            setUserModalVisible={setUserModalVisible}
-                        />
-                        <TicketsTable
-                            ticketsList={ticketsList}
-                            setTicketModalVisible={setTicketModalVisible}
-                            setSelectedTicketDetails={setSelectedTicketDetails}
-                        />
-                    </div>
+        <div className='container-fluid'>
+            <div className='row vh-100 bg-light'>
+                <div className='col-1 noPadding'>
+                    <SidebarNew home='/admin' />
                 </div>
-                <UserModal
-                    userModalVisible={userModalVisible}
-                    hideUserModal={hideUserModal}
-                    handleUserUpdate={handleUserUpdate}
-                    selectedUserDetails={selectedUserDetails}
-                    handleSelectedUserDataChange={handleSelectedUserDataChange}
-                    updateUserError={updateUserError}
-                />
 
-                <TicketModal
-                    ticketModalVisible={ticketModalVisible}
-                    hideTicketModal={hideTicketModal}
-                    selectedTicketDetails={selectedTicketDetails}
-                    handleSelectedTicketDataChange={
-                        handleSelectedTicketDataChange
-                    }
-                    handleTicketUpdate={handleTicketUpdate}
-                    updateTicketError={updateTicketError}
-                />
+                <div className='col-11 admin-main bg-gray-200 vh-100 overflow-auto'>
+                    <div>
+                        <h2 className='text-primary'>Welcome, {userName}</h2>
+
+                        <h4 className='text-secondary'>
+                            Take a quick look at your admin stats below
+                        </h4>
+                    </div>
+
+                    <StatusCards
+                        ticketsCount={ticketsCount}
+                        totalTicketsCount={ticketsList.length}
+                    />
+                    <UsersTable
+                        usersList={usersList}
+                        setSelectedUserDetails={setSelectedUserDetails}
+                        setUserModalVisible={setUserModalVisible}
+                    />
+                    <TicketsTable
+                        ticketsList={ticketsList}
+                        setTicketModalVisible={setTicketModalVisible}
+                        setSelectedTicketDetails={setSelectedTicketDetails}
+                    />
+                </div>
             </div>
+            <UserModal
+                userModalVisible={userModalVisible}
+                hideUserModal={hideUserModal}
+                handleUserUpdate={handleUserUpdate}
+                selectedUserDetails={selectedUserDetails}
+                handleSelectedUserDataChange={handleSelectedUserDataChange}
+                updateUserError={updateUserError}
+            />
+
+            <TicketModal
+                ticketModalVisible={ticketModalVisible}
+                hideTicketModal={hideTicketModal}
+                selectedTicketDetails={selectedTicketDetails}
+                handleSelectedTicketDataChange={handleSelectedTicketDataChange}
+                handleTicketUpdate={handleTicketUpdate}
+                updateTicketError={updateTicketError}
+            />
         </div>
     );
 };

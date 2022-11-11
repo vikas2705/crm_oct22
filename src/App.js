@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@coreui/coreui/dist/css/coreui.min.css";
+import Example from "./pages/example";
 
 function App() {
     return (
@@ -49,6 +50,7 @@ function App() {
                     <Route path='/admin' element={<Admin />} />
                 </Route>
                 <Route path='/unauthorized' element={<Unauthorized403 />} />
+                <Route path='/example' element={<Example />} />
                 <Route path='*' element={<NotFound404 />} />
             </Routes>
         </div>
