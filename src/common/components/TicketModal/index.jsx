@@ -11,6 +11,9 @@ const TicketModal = props => {
         updateTicketError,
     } = props;
 
+    const { id, title, status, ticketPriority, assignee, description } =
+        selectedTicketDetails;
+
     return (
         ticketModalVisible && (
             <Modal
@@ -25,9 +28,7 @@ const TicketModal = props => {
                 </Modal.Header>
                 <form onSubmit={handleTicketUpdate}>
                     <Modal.Body>
-                        <p className='m-2'>
-                            TicketId: {selectedTicketDetails.id}
-                        </p>
+                        <p className='m-2'>TicketId: {id}</p>
 
                         <div className='form-container my-4 mx-2'>
                             <label htmlFor='title' className='d-flex'>
@@ -37,7 +38,7 @@ const TicketModal = props => {
                                     id='title'
                                     name='title'
                                     className='form-control  mx-2'
-                                    value={selectedTicketDetails.title}
+                                    value={title}
                                     onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
@@ -51,21 +52,21 @@ const TicketModal = props => {
                                     id='description'
                                     name='description'
                                     className='form-control  mx-2'
-                                    value={selectedTicketDetails.description}
+                                    value={description}
                                     onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
                         </div>
 
                         <div className='form-container my-4 mx-2'>
-                            <label htmlFor='description' className='d-flex'>
+                            <label htmlFor='ticketPriority' className='d-flex'>
                                 <span> Ticket priority:</span>
                                 <input
                                     type='text'
                                     id='ticketPriority'
                                     name='ticketPriority'
                                     className='form-control mx-2'
-                                    value={selectedTicketDetails.ticketPriority}
+                                    value={ticketPriority}
                                     onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
@@ -79,7 +80,7 @@ const TicketModal = props => {
                                     id='assignee'
                                     name='assignee'
                                     className='form-control  mx-2'
-                                    value={selectedTicketDetails.assignee}
+                                    value={assignee}
                                     onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
@@ -91,7 +92,7 @@ const TicketModal = props => {
                                 <select
                                     className='form-select mx-2'
                                     name='status'
-                                    value={selectedTicketDetails.status}
+                                    value={status}
                                     onChange={handleSelectedTicketDataChange}
                                 >
                                     <option value='IN_PROGRESS'>

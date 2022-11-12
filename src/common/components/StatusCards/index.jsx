@@ -39,25 +39,27 @@ const StatusCards = props => {
     return (
         <div className='status-cards d-flex justify-content-between'>
             {statusData.map(statusCard => {
+                const { count, statusName, color, icon, pathColor } =
+                    statusCard;
                 const percentateValue = Math.floor(
-                    (statusCard.count / totalTicketsCount) * 100
+                    (count / totalTicketsCount) * 100
                 );
                 return (
                     <div
-                        key={statusCard.statusName}
-                        className={`status-card bg-${statusCard.color} card cardItem shadow text-dark bg-opacity-50 borders-b`}
+                        key={statusName}
+                        className={`status-card bg-${color} card cardItem shadow text-dark bg-opacity-50 borders-b`}
                     >
                         <div className='status-card-header d-flex justify-content-center align-items-center'>
-                            {statusCard.icon}
-                            <h4>{statusCard.statusName}</h4>
+                            {icon}
+                            <h4>{statusName}</h4>
                         </div>
                         <div className='status-card-footer d-flex justify-content-center'>
-                            <h2 className='px-2'>{statusCard.count}</h2>
+                            <h2 className='px-2'>{count}</h2>
                             <div style={{ width: 40, height: 40 }}>
                                 <CircularProgressbar
                                     value={percentateValue}
                                     styles={buildStyles({
-                                        pathColor: statusCard.pathColor,
+                                        pathColor: pathColor,
                                         trailColor: "#80808036",
                                     })}
                                 />
