@@ -72,7 +72,7 @@ const TicketsTable = props => {
                     ],
                 }}
                 title={"Ticket records"}
-                onRowClick={(event, rowData) => {
+                onRowClick={(_event, rowData) => {
                     setSelectedTicketDetails(rowData);
                     setTicketModalVisible(true);
                 }}

@@ -20,7 +20,7 @@ const SidebarNew = props => {
     return (
         <CSidebar unfoldable className='vh-100 bg-black'>
             <CSidebarNav>
-                <CSidebarBrand href='/admin' className='bg-dark'>
+                <CSidebarBrand href={home} className='bg-dark'>
                     <div>
                         <i className='bi bi-bar-chart-fill text-white m-2'></i>
                         <br />
