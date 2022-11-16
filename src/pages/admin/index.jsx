@@ -141,11 +141,14 @@ const Admin = () => {
                 })
                 .catch(err => {
                     console.log(err);
-                    setUpdateTicketError(err.message);
+                    setUpdateTicketError(
+                        err?.response?.data?.message || err.message
+                    );
+
                     // show error in the modal
                 });
         } catch (err) {
-            setUpdateTicketError(err.message);
+            setUpdateTicketError(err?.response?.data?.message || err.message);
             console.log(err);
             // show error in the modal
         }

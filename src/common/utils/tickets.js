@@ -1,3 +1,5 @@
+import { CARD_STATUS } from "../constants/cardStatus";
+
 export const calculateTicketsCount = (ticketsList = []) => {
     const ticketsCount = {
         open: 0,
@@ -7,11 +9,13 @@ export const calculateTicketsCount = (ticketsList = []) => {
     };
 
     ticketsList.forEach(ticket => {
-        if (ticket.status === "OPEN") {
+        const { status = "" } = ticket;
+
+        if (status === CARD_STATUS.OPEN) {
             ticketsCount.open++;
-        } else if (ticket.status === "CLOSED") {
+        } else if (status === CARD_STATUS.CLOSED) {
             ticketsCount.closed++;
-        } else if (ticket.status === "BLOCKED") {
+        } else if (status === CARD_STATUS.BLOCKED) {
             ticketsCount.blocked++;
         } else {
             ticketsCount.progress++;

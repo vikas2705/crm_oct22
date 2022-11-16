@@ -1,6 +1,8 @@
 import React from "react";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { USER_TYPES } from "../../../../common/constants/userTypes";
+import { PROFILE_STATUS } from "../../../../common/constants/profileStatus";
 
 const UsersTable = props => {
     const { usersList, setSelectedUserDetails, setUserModalVisible } = props;
@@ -26,18 +28,18 @@ const UsersTable = props => {
                         title: "STATUS",
                         field: "userStatus",
                         lookup: {
-                            PENDING: "PENDING",
-                            APPROVED: "APPROVED",
-                            REJECTED: "REJECTED",
+                            PENDING: PROFILE_STATUS.PENDING,
+                            APPROVED: PROFILE_STATUS.APPROVED,
+                            REJECTED: PROFILE_STATUS.REJECTED,
                         },
                     },
                     {
                         title: "User Type",
                         field: "userTypes",
                         lookup: {
-                            ADMIN: "ADMIN",
-                            CUSTOMER: "CUSTOMER",
-                            ENGINEER: "ENGINEER",
+                            ADMIN: USER_TYPES.ADMIN,
+                            CUSTOMER: USER_TYPES.CUSTOMER,
+                            ENGINEER: USER_TYPES.ENGINEER,
                         },
                     },
                 ]}

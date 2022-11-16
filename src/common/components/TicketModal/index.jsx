@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import { CARD_STATUS } from "../../constants/cardStatus";
 
 const TicketModal = props => {
     const {
@@ -9,7 +10,7 @@ const TicketModal = props => {
         handleSelectedTicketDataChange,
         handleTicketUpdate,
         updateTicketError,
-        isCustomerUserType = false,
+        isUserTypeCustomer = false,
         isCreateTicketMode = false,
     } = props;
 
@@ -52,6 +53,7 @@ const TicketModal = props => {
                                     name='title'
                                     className='form-control  mx-2'
                                     value={title}
+                                    required
                                     onChange={handleSelectedTicketDataChange}
                                 ></input>
                             </label>
@@ -59,14 +61,14 @@ const TicketModal = props => {
                         <div className='form-container my-4 mx-2'>
                             <label htmlFor='description' className='d-flex'>
                                 <span> Desciption:</span>
-                                <input
-                                    type='text'
+                                <textarea
                                     id='description'
                                     name='description'
                                     className='form-control  mx-2'
-                                    value={description}
                                     onChange={handleSelectedTicketDataChange}
-                                ></input>
+                                    value={description}
+                                    required
+                                />
                             </label>
                         </div>
                         {!isCreateTicketMode && (
@@ -86,7 +88,7 @@ const TicketModal = props => {
                                             onChange={
                                                 handleSelectedTicketDataChange
                                             }
-                                            disabled={isCustomerUserType}
+                                            disabled={isUserTypeCustomer}
                                         ></input>
                                     </label>
                                 </div>
@@ -105,7 +107,7 @@ const TicketModal = props => {
                                             onChange={
                                                 handleSelectedTicketDataChange
                                             }
-                                            disabled={isCustomerUserType}
+                                            disabled={isUserTypeCustomer}
                                         ></input>
                                     </label>
                                 </div>
@@ -120,15 +122,19 @@ const TicketModal = props => {
                                                 handleSelectedTicketDataChange
                                             }
                                         >
-                                            <option value='IN_PROGRESS'>
-                                                IN_PROGRESS
+                                            <option
+                                                value={CARD_STATUS.IN_PROGRESS}
+                                            >
+                                                {CARD_STATUS.IN_PROGRESS}
                                             </option>
-                                            <option value='OPEN'>OPEN</option>
-                                            <option value='BLOCKED'>
-                                                BLOCKED
+                                            <option value={CARD_STATUS.OPEN}>
+                                                {CARD_STATUS.OPEN}
                                             </option>
-                                            <option value='CLOSED'>
-                                                CLOSED
+                                            <option value={CARD_STATUS.BLOCKED}>
+                                                {CARD_STATUS.BLOCKED}
+                                            </option>
+                                            <option value={CARD_STATUS.CLOSED}>
+                                                {CARD_STATUS.CLOSED}
                                             </option>
                                         </select>
                                     </label>
@@ -150,7 +156,11 @@ const TicketModal = props => {
                         >
                             Cancel
                         </Button>
-                        <Button type='submit' className='btn btn-primary'>
+                        <Button
+                            type='submit'
+                            className='btn btn-primary'
+                            disabled={!title || !description}
+                        >
                             Save
                         </Button>
                     </Modal.Footer>

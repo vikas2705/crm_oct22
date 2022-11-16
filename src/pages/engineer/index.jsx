@@ -89,7 +89,10 @@ const Engineer = () => {
                     }
                 })
                 .catch(err => {
-                    setUpdateTicketError(err.message);
+                    setUpdateTicketError(
+                        err?.response?.data?.message || err.message
+                    );
+
                     setShowLoader(false);
                 });
             // make an api call to save the selected data
@@ -98,7 +101,7 @@ const Engineer = () => {
             // clear the selected ticket details
             // make the get call again to fetch latest data
         } catch (err) {
-            setUpdateTicketError(err.message);
+            setUpdateTicketError(err?.response?.data?.message || err.message);
             setShowLoader(false);
         }
     };

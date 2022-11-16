@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { fetchCreatedTickets, updateTicket } from "../../common/apis/tickets";
+import {
+    createTicket,
+    fetchCreatedTickets,
+    updateTicket,
+} from "../../common/apis/tickets";
 import Loader from "../../common/components/Loader";
 import SidebarNew from "../../common/components/SideBarNew";
 import StatusCards from "../../common/components/StatusCards";
@@ -16,7 +20,7 @@ const Customer = () => {
         useState(false);
     const [selectedTicketDetails, setSelectedTicketDetails] = useState({});
     const [showLoader, setShowLoader] = useState(false);
-    const [updateTicketError, setUpdateTicketError] = useState("");
+    const [ticketErrorMessage, setTicketErrorMessage] = useState("");
     const [ticketsCount, setTicketsCount] = useState({
         open: 0,
         progress: 0,
@@ -54,10 +58,13 @@ const Customer = () => {
     const hideUpdateTicketModal = () => {
         setUpdateTicketModalVisible(false);
         setSelectedTicketDetails({});
+        setTicketErrorMessage("");
     };
 
     const hideCreateTicketModal = () => {
         setCreateTicketModalVisible(false);
+        setSelectedTicketDetails({});
+        setTicketErrorMessage("");
     };
 
     const handleSelectedTicketDataChange = e => {
@@ -75,7 +82,7 @@ const Customer = () => {
         setSelectedTicketDetails(updatedTicket);
     };
 
-    const handleTicketUpdate = e => {
+    const saveTicketUpdate = e => {
         e.preventDefault();
         setShowLoader(true);
         try {
@@ -90,16 +97,48 @@ const Customer = () => {
                 .catch(err => {
                     console.log(err.message);
                     setShowLoader(false);
-                    setUpdateTicketError(err.message);
+                    setTicketErrorMessage(err.message);
                 });
         } catch (err) {
             console.log(err.message);
             setShowLoader(false);
-            setUpdateTicketError(err.message);
+            setTicketErrorMessage(err.message);
         }
     };
 
-    const handleTicketSave = e => {};
+    const saveTicketCreate = e => {
+        e.preventDefault();
+        const { title, description } = selectedTicketDetails;
+
+        const data = {
+            title,
+            description,
+        };
+
+        setShowLoader(true);
+        try {
+            createTicket(data)
+                .then(res => {
+                    const { status } = res;
+                    console.log(res);
+                    if (status === 201) {
+                        hideCreateTicketModal();
+                        getUserTickets();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    setTicketErrorMessage(
+                        err?.response?.data?.message || err.message
+                    );
+                    setShowLoader(false);
+                });
+        } catch (err) {
+            console.log(err);
+            setShowLoader(false);
+            setTicketErrorMessage(err?.response?.data?.message || err.message);
+        }
+    };
 
     if (showLoader) {
         return <Loader />;
@@ -147,9 +186,9 @@ const Customer = () => {
                                 handleSelectedTicketDataChange={
                                     handleSelectedTicketDataChange
                                 }
-                                handleTicketUpdate={handleTicketUpdate}
-                                isCustomerUserType={true}
-                                updateTicketError={updateTicketError}
+                                handleTicketUpdate={saveTicketUpdate}
+                                isUserTypeCustomer
+                                updateTicketError={ticketErrorMessage}
                             />
                         )}
 
@@ -160,10 +199,11 @@ const Customer = () => {
                                 handleSelectedTicketDataChange={
                                     handleSelectedTicketDataChange
                                 }
-                                handleTicketUpdate={handleTicketSave}
-                                updateTicketError={updateTicketError}
-                                isCustomerUserType={true}
-                                isCreateTicketMode={true}
+                                handleTicketUpdate={saveTicketCreate}
+                                updateTicketError={ticketErrorMessage}
+                                isUserTypeCustomer
+                                isCreateTicketMode
+                                selectedTicketDetails={selectedTicketDetails}
                             />
                         )}
                     </div>

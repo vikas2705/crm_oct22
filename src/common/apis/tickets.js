@@ -16,16 +16,17 @@ export const fetchCreatedTickets = async () => {
 };
 
 export const updateTicket = async (ticketData, ticketId) => {
-    return await axios.put(
-        `${host}/tickets/${ticketId}`,
-        ticketData,
-        {
-            headers: {
-                "x-access-token": localStorage.getItem("accessToken"),
-            },
+    return await axios.put(`${host}/tickets/${ticketId}`, ticketData, {
+        headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
         },
-        {
-            ticketId,
-        }
-    );
+    });
+};
+
+export const createTicket = async ticketData => {
+    return await axios.post(`${host}/tickets`, ticketData, {
+        headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+        },
+    });
 };

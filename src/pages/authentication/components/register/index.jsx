@@ -123,8 +123,12 @@ const Register = props => {
                                 value={userType}
                                 className='form-control'
                             >
-                                <option value='ENGINEER'>Engineer</option>
-                                <option value='CUSTOMER'>Customer</option>
+                                <option value={USER_TYPES.ENGINEER}>
+                                    Engineer
+                                </option>
+                                <option value={USER_TYPES.CUSTOMER}>
+                                    Customer
+                                </option>
                             </select>
                         </div>
                         <div className='form-container'>

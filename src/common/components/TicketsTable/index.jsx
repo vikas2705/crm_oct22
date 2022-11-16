@@ -1,6 +1,7 @@
 import React from "react";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
+import { CARD_STATUS } from "../../constants/cardStatus";
 
 const TicketsTable = props => {
     const { ticketsList, setTicketModalVisible, setSelectedTicketDetails } =
@@ -40,10 +41,10 @@ const TicketsTable = props => {
                         title: "STATUS",
                         field: "status",
                         lookup: {
-                            OPEN: "OPEN",
-                            IN_PROGRESS: "IN_PROGRESS",
-                            BLOCKED: "BLOCKED",
-                            CLOSED: "CLOSED",
+                            OPEN: CARD_STATUS.OPEN,
+                            IN_PROGRESS: CARD_STATUS.IN_PROGRESS,
+                            BLOCKED: CARD_STATUS.CARD_STATUS,
+                            CLOSED: CARD_STATUS.CLOSED,
                         },
                     },
                 ]}

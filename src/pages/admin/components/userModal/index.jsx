@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import { PROFILE_STATUS } from "../../../../common/constants/profileStatus";
 import { USER_TYPES } from "../../../../common/constants/userTypes";
 
 const UserModal = props => {
@@ -91,9 +92,15 @@ const UserModal = props => {
                                     value={selectedUserDetails.userStatus}
                                     onChange={handleSelectedUserDataChange}
                                 >
-                                    <option value='PENDING'>PENDING</option>
-                                    <option value='APPROVED'>APPROVED</option>
-                                    <option value='REJECTED'>REJECTED</option>
+                                    <option value={PROFILE_STATUS.PENDING}>
+                                        {PROFILE_STATUS.PENDING}
+                                    </option>
+                                    <option value={PROFILE_STATUS.APPROVED}>
+                                        {PROFILE_STATUS.APPROVED}
+                                    </option>
+                                    <option value={PROFILE_STATUS.REJECTED}>
+                                        {PROFILE_STATUS.REJECTED}
+                                    </option>
                                 </select>
                             </label>
                         </div>
