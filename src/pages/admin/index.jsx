@@ -130,7 +130,7 @@ const Admin = () => {
         try {
             updateTicket(data, selectedTicketDetails.id)
                 .then(res => {
-                    const { data, status } = res;
+                    const { status } = res;
                     if (status === 200) {
                         hideTicketModal();
                         getTickets();
