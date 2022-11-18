@@ -7,15 +7,6 @@ const Example = () => {
     const [age, setAge] = useState(0);
     const [city, setCity] = useState("");
 
-    const xyz = () => {
-        console.log("here");
-    };
-
-    const abcd = () => {
-        // complicated calculation
-        //  0.1 sec
-    };
-
     const setAgeValue = useCallback(val => {
         setAge(val);
     }, []);
@@ -29,6 +20,8 @@ const Example = () => {
             <h1>Name: {name}</h1>
             <Age setAgeValue={setAgeValue} />
             <City setCityValue={setCityValue} />
+            <span>{age}</span>
+            <span>{city}</span>
 
             <label>
                 Enter Name:{" "}
