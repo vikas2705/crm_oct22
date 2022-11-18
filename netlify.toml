@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/admin"
+  to = "/"
+  status = 301
+  force = true
+  query = {path = ":path"}
+
+## This rule redirects to an external API, signing requests with a secret
+[[redirects]]
+  from = "/customer"
+  to = "/"
+  status = 301
+  force = true # COMMENT: ensure that we always redirect
+
